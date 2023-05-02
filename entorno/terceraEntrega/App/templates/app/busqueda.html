@@ -1,0 +1,22 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+  <h1>Búsqueda de productos</h1>
+  <form action="#" method="get">
+    <input type="text" name="q">
+    <input type="submit" value="Buscar">
+  </form>
+
+  {% if productos %}
+    <h2>Resultados de búsqueda:</h2>
+    <ul>
+      {% for producto in productos %}
+        <li>{{ producto.name }} - {{ producto.price }} - {{ producto.sku }}</li>
+      {% endfor %}
+    </ul>
+  {% elif mensaje %}
+    <p>{{ mensaje }}</p>
+  {% endif %}
+
+{% endblock %}
