@@ -2,12 +2,12 @@
 
 Proyecto creado con Django
 
-Constan de tres Modelos:
+Consta de tres Modelos:
 
-lients, Products y Sellers
+Clients, Products y Sellers
 
 
-Cada una con sus formularios asosiados:
+Cada una con sus formularios asociados:
 
 ClientForm, ProductoForm y SellerForm
 
