@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import ClientForm, ProductoForm, SellerForm
 from .models import Clients, Products, Sellers
+from django.contrib import messages
 
 # Create your views here.
 
@@ -13,7 +14,9 @@ def client(request):
 
         if form.is_valid:
             form.save()
-            return render(request, './app/home.html')
+            messages.success(request, 'El cliente se ha creado con éxito.')
+            form = ClientForm()
+            return render(request, "./app/cliente.html", {"form": form})
     else:
         form = ClientForm()
     return render(request, "./app/cliente.html", {"form": form})
@@ -24,7 +27,9 @@ def product(request):
 
         if form.is_valid():
             form.save()
-            return render(request, './app/home.html')
+            messages.success(request, 'El producto se ha creado con éxito.')
+            form = ProductoForm()
+            return render(request, './app/producto.html', {'form': form})
     else:
         form = ProductoForm()
     return render(request, './app/producto.html', {'form': form})
@@ -35,7 +40,9 @@ def seller(request):
 
         if form.is_valid:
             form.save()
-            return render(request, './app/home.html')
+            messages.success(request, 'El vendedor se ha creado con éxito.')
+            form = SellerForm()
+            return render(request, "./app/vendedor.html", {"form": form})
     else:
         form = SellerForm()
     return render(request, "./app/vendedor.html", {"form": form})

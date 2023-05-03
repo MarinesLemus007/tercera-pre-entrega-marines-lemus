@@ -7,5 +7,13 @@
     {{ form.as_p }}
     <input type="submit" value="Enviar" />
   </form>
+
+  {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+  {% endif %}
   
 {% endblock %}
