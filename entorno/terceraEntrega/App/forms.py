@@ -15,4 +15,3 @@ class SellerForm(forms.ModelForm):
     class Meta:
         model = Sellers
         fields = ['name', 'email']
-    busqueda = forms.CharField(label='Buscar producto', max_length=100)
