@@ -2,10 +2,13 @@
 
 {% block content %}
 
+<h2>Productos</h2>
+<p>Ingresa un producto a la base de datos agregando su nombre, precio y código.</p>
+
   <form method="post">
     {% csrf_token %} 
     {{ form.as_p }}
-    <input class="btn btn-primary mt-2" type="submit" value="Enviar" />
+    <input class="btn btn-primary mt-2 w-100" type="submit" value="Enviar" />
   </form>
 
   {% if messages %}

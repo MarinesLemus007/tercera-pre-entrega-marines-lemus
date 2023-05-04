@@ -2,11 +2,13 @@
 
 {% block content %}
 
-  <h1>Búsqueda de productos</h1>
+  <h2>Búsqueda de productos</h2>
+  <p>Busca un producto en la base de datos según su nombre.</p>
+
   <form action="#" method="get">
     <label for="buscar">Nombre del producto:</label>
     <input id="buscar" type="text" name="q">
-    <input class="btn btn-primary mt-2" type="submit" value="Buscar">
+    <input class="btn btn-primary mt-2 w-100" type="submit" value="Buscar">
   </form>
 
   {% if productos %}
