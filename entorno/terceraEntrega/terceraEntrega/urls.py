@@ -16,13 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from App.views import home, client, product, seller, buscar
+from App.views import home, client, cliente_editar, cliente_eliminar, product, seller, buscar
+from django.conf import settings 
+from django.conf.urls.static import static 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('cliente/', client),
+    path('cliente/', client, name='cliente'),
+    path('cliente_editar/<int:id_cliente>/', cliente_editar, name='cliente_editar'),
+    path('cliente_eliminar/<int:id_cliente>/', cliente_eliminar, name='cliente_eliminar'),
     path('producto/', product),
     path('vendedor/', seller),
     path('busqueda/', buscar, name='buscar'),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

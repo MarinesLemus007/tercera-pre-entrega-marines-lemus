@@ -9,6 +9,10 @@ def home(request):
     return render(request, "./app/base.html")
 
 def client(request):
+
+    request.method == 'GET'
+    clientes = Clients.objects.all()
+
     if request.method =='POST':
         form = ClientForm(request.POST)
 
@@ -16,10 +20,40 @@ def client(request):
             form.save()
             messages.success(request, 'El cliente se ha creado con éxito.')
             form = ClientForm()
-            return render(request, "./app/cliente.html", {"form": form})
+            return render(request, "./app/cliente.html", {"form": form, "clientes": clientes})
     else:
         form = ClientForm()
-    return render(request, "./app/cliente.html", {"form": form})
+    return render(request, "./app/cliente.html", {"form": form, "clientes": clientes})
+
+def cliente_editar(request, cliente_id):
+    cliente = get_object_or_404(Clients, pk=cliente_id)
+
+    q = request.GET.get('q', '')
+    productos = Products.objects.filter(name__icontains=q)
+
+    if request.method == 'POST':
+        nombre = request.POST.get('name')
+        email = request.POST.get('email')
+
+        cliente.name = nombre
+        cliente.email = email
+
+        cliente.save()
+
+        return redirect('./app/cliente.html')
+
+    return render(request, './app/cliente.html')
+
+def cliente_eliminar(request, id_cliente):
+
+    if(request.method == 'GET'):
+        client = Clients.objects.get(id=id_cliente)
+        client.delete()
+        messages.success(request,'el Cliente se ha eliminado exitosamente.')
+        return render(request, './app/cliente_eliminar.html')
+    else:
+        messages.success(request,'Hubo un erro al intentar borrar el usuario.')
+        return render(request, './app/cliente_eliminar.html')
 
 def product(request):
     if request.method == 'POST':
