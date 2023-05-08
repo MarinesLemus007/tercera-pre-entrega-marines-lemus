@@ -2,21 +2,47 @@
 
 {% block content %}
 
-<h2>Productos</h2>
-<p>Ingresa un producto a la base de datos agregando su nombre, precio y código.</p>
+<div class="row">
 
-  <form method="post" class="creacion">
-    {% csrf_token %} 
-    {{ form.as_p }}
-    <input class="btn btn-primary mt-2 w-100" type="submit" value="Enviar" />
-  </form>
+  <h2>Productos</h2>
+  <p>Ingresa un producto a la base de datos agregando su nombre, precio y código.</p>
 
-  {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} mensajes">
-            {{ message }}
-        </div>
-    {% endfor %}
+  <div class="col-md-4">
+    <form method="post" class="creacion">
+      {% csrf_token %} 
+      {{ form.as_p }}
+      <input class="btn btn-primary mt-2 w-100" type="submit" value="Enviar" />
+    </form>
+  </div>
+
+  <div class="col-md-8">
+    {% if messages %}
+      {% for message in messages %}
+          <div id="temporizador" class="alert alert-{{ message.tags }} mensajes">
+              {{ message }}
+          </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if productos %}
+    <ul class="listado-base-de-datos">
+      {% for producto in productos %}
+        <li>
+          
+          <p>{{ producto.name }} - {{ producto.price }} - {{ producto.sku }}</p>
+
+          <p>
+            <a href="{% url 'producto_editar' id_producto=producto.id %}" class="btn btn-success">Editar</a>
+            <a href="{% url 'producto_eliminar' id_producto=producto.id %}" class="btn btn-danger">Eliminar</a>
+          </p>
+
+        </li>
+      {% endfor %}
+    </ul>
   {% endif %}
+
+  </div>
+
+</div>
 
 {% endblock %}
