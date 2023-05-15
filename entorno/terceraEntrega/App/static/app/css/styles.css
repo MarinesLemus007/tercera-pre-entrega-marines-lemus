@@ -9,6 +9,16 @@ main{
     margin: auto;
 }
 
+li.nav-item{
+    display: flex;
+    align-items: center;
+}
+
+li.nav-item img{
+    width: 25px;
+    height: 25px;
+}
+
 .jumbotron.jumbotron-fluid{
     background-color: cornflowerblue;
     padding: 50px 0;

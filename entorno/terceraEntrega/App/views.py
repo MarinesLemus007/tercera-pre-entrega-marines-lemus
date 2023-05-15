@@ -2,12 +2,58 @@ from django.shortcuts import render
 from .forms import ClientForm, ProductoForm, SellerForm
 from .models import Clients, Products, Sellers
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+
 
 # Create your views here.
 
 def home(request):
     return render(request, "./app/base.html")
 
+def registro(request):
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password_confirm = request.POST['password-confirm']
+
+        if password != password_confirm:
+            messages.success(request, 'Las contraseñas no coinciden', extra_tags='danger')
+            return render(request, './app/registro.html')
+
+        else:
+            user = User.objects.create_user(username, email, password)
+            user.is_staff = True
+            user.save()
+            messages.success(request, 'El Usuario se ha creado con exito')
+    
+    return render(request, './app/registro.html')
+
+def logeo(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if authenticate:
+            try:
+                login(request, user)
+            except:
+                messages.success(request, 'Ha ocurrido un error', extra_tags='danger')
+            else:
+                messages.success(request, 'Se ha logeado exotisamente')
+            
+    return render(request, './app/logeo.html')
+
+def desloguear(request):
+    logout(request)
+    return render(request, './app/home.html')
+
+@login_required(login_url='/logeo/')
 def client(request):
 
     request.method == 'GET'
@@ -25,6 +71,7 @@ def client(request):
         form = ClientForm()
     return render(request, "./app/cliente.html", {"form": form, "clientes": clientes})
 
+@login_required(login_url='/logeo/')
 def cliente_editar(request, id_cliente):
     client = Clients.objects.get(id=id_cliente)
     
@@ -45,6 +92,7 @@ def cliente_editar(request, id_cliente):
             messages.success(request,'Hubo un erro al intentar editar el Cliente.')
             return render(request, "./app/cliente.html")
 
+@login_required(login_url='/logeo/')
 def cliente_eliminar(request, id_cliente):
 
     if(request.method == 'GET'):
@@ -56,6 +104,7 @@ def cliente_eliminar(request, id_cliente):
         messages.success(request,'Hubo un erro al intentar borrar el Cliente.')
         return render(request, './app/cliente_eliminar.html')
 
+@login_required(login_url='/logeo/')
 def product(request):
 
     request.method == 'GET'
@@ -73,6 +122,7 @@ def product(request):
         form = ProductoForm()
     return render(request, './app/producto.html', {'form': form, 'productos': productos})
 
+@login_required(login_url='/logeo/')
 def producto_editar(request, id_producto):
     producto = Products.objects.get(id=id_producto)
     
@@ -93,6 +143,7 @@ def producto_editar(request, id_producto):
             messages.success(request,'Hubo un erro al intentar editar el Producto.')
             return render(request, "./app/producto.html")
 
+@login_required(login_url='/logeo/')
 def producto_eliminar(request, id_producto):
 
     if(request.method == 'GET'):
@@ -104,7 +155,7 @@ def producto_eliminar(request, id_producto):
         messages.success(request,'Hubo un erro al intentar borrar el Producto.')
         return render(request, './app/producto_eliminar.html')
 
-
+@login_required(login_url='/logeo/')
 def seller(request):
 
     request.method == 'GET'
@@ -122,6 +173,7 @@ def seller(request):
         form = SellerForm()
     return render(request, "./app/vendedor.html", {"form": form, "vendedores": vendedores})
 
+@login_required(login_url='/logeo/')
 def vendedor_editar(request, id_vendedor):
     vendedor = Sellers.objects.get(id=id_vendedor)
     
@@ -142,6 +194,7 @@ def vendedor_editar(request, id_vendedor):
             messages.success(request,'Hubo un erro al intentar editar el Vendedor.')
             return render(request, "./app/vendedor.html")
 
+@login_required(login_url='/logeo/')
 def vendedor_eliminar(request, id_vendedor):
 
     if(request.method == 'GET'):
@@ -153,6 +206,7 @@ def vendedor_eliminar(request, id_vendedor):
         messages.success(request,'Hubo un erro al intentar borrar al Vendedor.')
         return render(request, './app/vendedor_eliminar.html')
 
+@login_required(login_url='/logeo/')
 def buscar(request):
 
     q = request.GET.get('q', '')
