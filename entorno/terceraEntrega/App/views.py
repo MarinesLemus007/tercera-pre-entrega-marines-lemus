@@ -1,17 +1,20 @@
-from django.shortcuts import render
-from .forms import ClientForm, ProductoForm, SellerForm
-from .models import Clients, Products, Sellers
+from django.shortcuts import render, get_object_or_404
+from .forms import ClientForm, ProductoForm, SellerForm, AvatarFormulario
+from .models import Clients, Products, Sellers, Avatar
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+# from PIL import Image, ImageChops, ImageEnhance, ImageOps
+from django.http import HttpResponse
 
 
 # Create your views here.
 
 def home(request):
-    return render(request, "./app/base.html")
+        
+    return render(request, "./app/base.html", {'active_view': 'vista_home'})
 
 def registro(request):
 
@@ -23,7 +26,7 @@ def registro(request):
 
         if password != password_confirm:
             messages.success(request, 'Las contraseñas no coinciden', extra_tags='danger')
-            return render(request, './app/registro.html')
+            return render(request, './app/registro.html', {'active_view': 'vista_registro'})
 
         else:
             user = User.objects.create_user(username, email, password)
@@ -31,9 +34,10 @@ def registro(request):
             user.save()
             messages.success(request, 'El Usuario se ha creado con exito')
     
-    return render(request, './app/registro.html')
+    return render(request, './app/registro.html', {'active_view': 'vista_registro'})
 
 def logeo(request):
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -47,11 +51,12 @@ def logeo(request):
             else:
                 messages.success(request, 'Se ha logeado exotisamente')
             
-    return render(request, './app/logeo.html')
+    return render(request, './app/logeo.html', {'active_view': 'vista_login'})
 
 def desloguear(request):
+
     logout(request)
-    return render(request, './app/home.html')
+    return render(request, './app/home.html', {'active_view': 'vista_logout'})
 
 @login_required(login_url='/logeo/')
 def client(request):
@@ -66,18 +71,19 @@ def client(request):
             form.save()
             messages.success(request, 'El cliente se ha creado con éxito.')
             form = ClientForm()
-            return render(request, "./app/cliente.html", {"form": form, "clientes": clientes})
+            return render(request, './app/cliente.html', {'form': form, 'clientes': clientes, 'active_view': 'vista_clientes'})
     else:
         form = ClientForm()
-    return render(request, "./app/cliente.html", {"form": form, "clientes": clientes})
+    return render(request, './app/cliente.html', {'form': form, 'clientes': clientes, 'active_view': 'vista_clientes'})
 
 @login_required(login_url='/logeo/')
 def cliente_editar(request, id_cliente):
+
     client = Clients.objects.get(id=id_cliente)
     
     if(request.method == 'GET'):
         form = ClientForm(instance=client)
-        return render(request, './app/cliente_editar.html', {"form": form, 'client': client})
+        return render(request, './app/cliente_editar.html', {"form": form, 'client': client, 'active_view': 'vista_clientes'})
         
 
     if request.method == 'POST':
@@ -86,11 +92,11 @@ def cliente_editar(request, id_cliente):
         if form.is_valid:
             form.save()
             messages.success(request,'el Cliente se ha editado exitosamente.')
-            return render(request, "./app/cliente_editar.html")
+            return render(request, "./app/cliente_editar.html", {'active_view': 'vista_clientes'})
         
         else:
             messages.success(request,'Hubo un erro al intentar editar el Cliente.')
-            return render(request, "./app/cliente.html")
+            return render(request, "./app/cliente.html", {'active_view': 'vista_clientes'})
 
 @login_required(login_url='/logeo/')
 def cliente_eliminar(request, id_cliente):
@@ -99,10 +105,10 @@ def cliente_eliminar(request, id_cliente):
         client = Clients.objects.get(id=id_cliente)
         client.delete()
         messages.success(request,'el Cliente se ha eliminado exitosamente.')
-        return render(request, './app/cliente_eliminar.html')
+        return render(request, './app/cliente_eliminar.html', {'active_view': 'vista_clientes'})
     else:
         messages.success(request,'Hubo un erro al intentar borrar el Cliente.')
-        return render(request, './app/cliente_eliminar.html')
+        return render(request, './app/cliente_eliminar.html', {'active_view': 'vista_clientes'})
 
 @login_required(login_url='/logeo/')
 def product(request):
@@ -117,10 +123,10 @@ def product(request):
             form.save()
             messages.success(request, 'El producto se ha creado con éxito.')
             form = ProductoForm()
-            return render(request, './app/producto.html', {'form': form, 'productos': productos})
+            return render(request, './app/producto.html', {'form': form, 'productos': productos, 'active_view': 'vista_productos'})
     else:
         form = ProductoForm()
-    return render(request, './app/producto.html', {'form': form, 'productos': productos})
+    return render(request, './app/producto.html', {'form': form, 'productos': productos, 'active_view': 'vista_productos'})
 
 @login_required(login_url='/logeo/')
 def producto_editar(request, id_producto):
@@ -128,7 +134,7 @@ def producto_editar(request, id_producto):
     
     if(request.method == 'GET'):
         form = ProductoForm(instance=producto)
-        return render(request, './app/producto_editar.html', {"form": form, 'producto': producto})
+        return render(request, './app/producto_editar.html', {"form": form, 'producto': producto, 'active_view': 'vista_productos'})
         
 
     if request.method == 'POST':
@@ -137,11 +143,11 @@ def producto_editar(request, id_producto):
         if form.is_valid:
             form.save()
             messages.success(request,'el Producto se ha editado exitosamente.')
-            return render(request, "./app/producto_editar.html")
+            return render(request, "./app/producto_editar.html", {'active_view': 'vista_productos'})
         
         else:
             messages.success(request,'Hubo un erro al intentar editar el Producto.')
-            return render(request, "./app/producto.html")
+            return render(request, "./app/producto.html", {'active_view': 'vista_productos'})
 
 @login_required(login_url='/logeo/')
 def producto_eliminar(request, id_producto):
@@ -150,10 +156,10 @@ def producto_eliminar(request, id_producto):
         producto = Products.objects.get(id=id_producto)
         producto.delete()
         messages.success(request,'el Producto se ha eliminado exitosamente.')
-        return render(request, './app/producto_eliminar.html')
+        return render(request, './app/producto_eliminar.html', {'active_view': 'vista_productos'})
     else:
         messages.success(request,'Hubo un erro al intentar borrar el Producto.')
-        return render(request, './app/producto_eliminar.html')
+        return render(request, './app/producto_eliminar.html', {'active_view': 'vista_productos'})
 
 @login_required(login_url='/logeo/')
 def seller(request):
@@ -168,10 +174,10 @@ def seller(request):
             form.save()
             messages.success(request, 'El vendedor se ha creado con éxito.')
             form = SellerForm()
-            return render(request, "./app/vendedor.html", {"form": form, "vendedores": vendedores})
+            return render(request, "./app/vendedor.html", {"form": form, "vendedores": vendedores, 'active_view': 'vista_vendedores'})
     else:
         form = SellerForm()
-    return render(request, "./app/vendedor.html", {"form": form, "vendedores": vendedores})
+    return render(request, "./app/vendedor.html", {"form": form, "vendedores": vendedores, 'active_view': 'vista_vendedores'})
 
 @login_required(login_url='/logeo/')
 def vendedor_editar(request, id_vendedor):
@@ -179,7 +185,7 @@ def vendedor_editar(request, id_vendedor):
     
     if(request.method == 'GET'):
         form = SellerForm(instance=vendedor)
-        return render(request, './app/vendedor_editar.html', {"form": form, 'vendedor': vendedor})
+        return render(request, './app/vendedor_editar.html', {"form": form, 'vendedor': vendedor, 'active_view': 'vista_vendedores'})
         
 
     if request.method == 'POST':
@@ -188,11 +194,11 @@ def vendedor_editar(request, id_vendedor):
         if form.is_valid:
             form.save()
             messages.success(request,'el Vendedor se ha editado exitosamente.')
-            return render(request, "./app/vendedor_editar.html")
+            return render(request, "./app/vendedor_editar.html", {'active_view': 'vista_vendedores'})
         
         else:
             messages.success(request,'Hubo un erro al intentar editar el Vendedor.')
-            return render(request, "./app/vendedor.html")
+            return render(request, "./app/vendedor.html", {'active_view': 'vista_vendedores'})
 
 @login_required(login_url='/logeo/')
 def vendedor_eliminar(request, id_vendedor):
@@ -201,10 +207,10 @@ def vendedor_eliminar(request, id_vendedor):
         vendedor = Sellers.objects.get(id=id_vendedor)
         vendedor.delete()
         messages.success(request,'el Vendedor se ha eliminado exitosamente.')
-        return render(request, './app/vendedor_eliminar.html')
+        return render(request, './app/vendedor_eliminar.html', {'active_view': 'vista_vendedores'})
     else:
         messages.success(request,'Hubo un erro al intentar borrar al Vendedor.')
-        return render(request, './app/vendedor_eliminar.html')
+        return render(request, './app/vendedor_eliminar.html', {'active_view': 'vista_vendedores'})
 
 @login_required(login_url='/logeo/')
 def buscar(request):
@@ -213,7 +219,20 @@ def buscar(request):
     productos = Products.objects.filter(name__icontains=q)
  
     if productos:
-        return render(request, './app/busqueda.html', {'productos': productos})
+        return render(request, './app/busqueda.html', {'productos': productos, 'active_view': 'vista_busqueda'})
     else:
         mensaje = 'Producto no encontrado'
-        return render(request, './app/busqueda.html', {'mensaje': mensaje})
+        return render(request, './app/busqueda.html', {'mensaje': mensaje, 'active_view': 'vista_busqueda'})
+
+@login_required(login_url='/logeo/')
+def agregarAvatar(request):
+      if request.method == 'POST':
+            miFormulario = AvatarFormulario(request.POST, request.FILES) 
+            if miFormulario.is_valid():
+                  u = User.objects.get(username=request.user)
+                  avatar = Avatar(user=u, imagen=miFormulario.cleaned_data['imagen']) 
+                  avatar.save()
+                  return render(request, "./app/agregarAvatar.html", {'active_view': 'vista_login'})
+      else: 
+            miFormulario= AvatarFormulario()
+      return render(request, "./app/agregarAvatar.html", {"miFormulario":miFormulario, 'active_view': 'vista_avatar'})

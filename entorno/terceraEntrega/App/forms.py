@@ -1,5 +1,5 @@
 from django import forms
-from .models import Clients, Products, Sellers
+from .models import Clients, Products, Sellers, Avatar
  
 class ClientForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,6 @@ class SellerForm(forms.ModelForm):
     class Meta:
         model = Sellers
         fields = ['name', 'email']
+
+class AvatarFormulario(forms.Form):
+    imagen = forms.ImageField(required=True)

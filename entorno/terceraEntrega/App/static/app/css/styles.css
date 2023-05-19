@@ -38,6 +38,10 @@ form.creacion input{
     width: 100%;
 }
 
+form.creacion.w-500{
+    max-width: 500px;
+}
+
 .mensajes{
     margin-top: 10px;
     width: 100%;

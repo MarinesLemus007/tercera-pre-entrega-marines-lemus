@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-bs7mv5b(c3a6&d&fv5lqu)_1-4=7tvrtvq&d5=%8m!7@t%3b8w
 DEBUG = True
 #DEBUG = False
 
-#ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -65,6 +65,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+                'App.context_processors.mi_avatar',
             ],
         },
     },
@@ -119,8 +121,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -37,3 +38,9 @@ class Sellers(models.Model):
     class Meta:
         verbose_name = "vendedor"
         verbose_name_plural = "vendedores"
+    
+class Avatar(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to='avatares', null=True, blank = True)
+    def __str__(self):
+        return f"{self.user} - {self.imagen}"
