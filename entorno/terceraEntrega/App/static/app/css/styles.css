@@ -77,15 +77,18 @@ ul.listado-base-de-datos li p{
 }
 
 ul.listado-base-de-datos.listas-productos{
+    justify-content: start;
     display: flex;
     flex-direction: row;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 ul.listado-base-de-datos.listas-productos li{
     flex-direction: column;
-    width: 250px;
-    height: 330px;
+    width: 225px;
+    min-height: 330px;
+    height: auto;
 }
 
 ul.listado-base-de-datos.listas-productos li img{
