@@ -25,6 +25,4 @@ Se ocupó la librería Pillow para trabajar con imágenes en los modelos. Para i
 pip install pillow
 ```
 
-Se deja url para visualizar el proyecto [GitHub Pages](https://pages.github.com/).
-
-Se deja url de explicación del proyecto en youtube [youTube](https://pages.github.com/).
+Se deja url de explicación del proyecto en youtube [youTube](https://www.youtube.com/watch?v=uYwB2wMXcpQ).

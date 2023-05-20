@@ -27,6 +27,7 @@ DEBUG = True
 #DEBUG = False
 
 ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['marineslemus.pythonanywhere.com']
 # ALLOWED_HOSTS = ['*']
 
 
