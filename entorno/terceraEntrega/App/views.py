@@ -16,6 +16,10 @@ def home(request):
         
     return render(request, "./app/base.html", {'active_view': 'vista_home'})
 
+def profile(request):
+
+    return render(request, "./app/profile.html", {'active_view': 'vista_profile'})
+
 def registro(request):
 
     if request.method == 'POST':

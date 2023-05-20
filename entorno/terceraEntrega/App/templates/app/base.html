@@ -30,6 +30,10 @@
                     <a class="nav-link {% if active_view == 'vista_home' %}active{% endif %}" aria-current="page" href="/">Home</a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link {% if active_view == 'vista_profile' %}active{% endif %}" aria-current="page" href="/profile">Sobre mí</a>
+                    <img src="{% static 'App/img/iconos/profile.png' %}" alt="">
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link {% if active_view == 'vista_clientes' %}active{% endif %}" href="/cliente">Clientes</a>
                     <img src="{% static 'App/img/iconos/clientes.png' %}" alt="">
                   </li>

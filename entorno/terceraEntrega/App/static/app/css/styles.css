@@ -81,6 +81,19 @@ ul.listado-base-de-datos li p{
     transition: opacity 2s;
 }
 
+.card-profile{
+    align-items: start;
+}
+
+.card-profile img{
+ width: 90%;
+ height: auto;
+}
+
+.card-profile ul{
+    list-style-image: url(../img/iconos/check.png);
+} 
+
 @media (min-width: 992px){
     .navbar-expand-lg .navbar-nav {
         width: 100%;
