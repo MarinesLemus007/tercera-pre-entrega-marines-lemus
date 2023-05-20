@@ -14,10 +14,10 @@ Tiene también una función para buscar productos según su nombre. Se puede reg
 
 Se realizaron cuatro tests para evaluar:
 
-✅ Creación de clientes
-✅ Creación de productos
-✅ Lectura de imagen por default de producto cuando no se proporciona
-✅ Comprobación de sku único en producto creado.
+- [x] Creación de clientes
+- [x] Creación de productos
+- [x] Lectura de imagen por default de producto cuando no se proporciona
+- [x] Comprobación de sku único en producto creado.
 
 Se ocupó la librería Pillow para trabajar con imágenes en los modelos. Para instalarla, se debe ejecutar el comando:
 
