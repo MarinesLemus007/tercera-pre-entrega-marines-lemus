@@ -76,6 +76,30 @@ ul.listado-base-de-datos li p{
     margin-bottom: 0;
 }
 
+ul.listado-base-de-datos.listas-productos{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+ul.listado-base-de-datos.listas-productos li{
+    flex-direction: column;
+    width: 250px;
+    height: 330px;
+}
+
+ul.listado-base-de-datos.listas-productos li img{
+    height: 100px;
+    width: auto;
+}
+
+ul.listado-base-de-datos.listas-productos li p{
+    padding: 20px 0;
+    font-size: 12px;
+    width: 200px;
+    text-align: center;
+}
+
 .fade-out {
     opacity: 0;
     transition: opacity 2s;

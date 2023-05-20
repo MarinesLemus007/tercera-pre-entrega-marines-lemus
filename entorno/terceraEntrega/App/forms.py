@@ -9,7 +9,7 @@ class ClientForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Products
-        fields = ['name', 'price', 'sku']
+        fields = ['name', 'price', 'sku', 'image']
 
 class SellerForm(forms.ModelForm):
     class Meta:

@@ -8,10 +8,10 @@
   <p>Ingresa un producto a la base de datos agregando su nombre, precio y código.</p>
 
   <div class="col-md-4">
-    <form method="post" class="creacion">
-      {% csrf_token %} 
+    <form class="creacion w-500" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-primary mt-2 w-100" type="submit" value="Crear" />
+      <button class="btn btn-primary mt-2 w-100" type="submit">Guardar</button>
     </form>
   </div>
 
@@ -25,11 +25,11 @@
     {% endif %}
 
     {% if productos %}
-    <ul class="listado-base-de-datos">
+    <ul class="listado-base-de-datos listas-productos">
       {% for producto in productos %}
         <li>
-          
-          <p>{{ producto.name }} - {{ producto.price }} - {{ producto.sku }}</p>
+          <img src="{{ producto.image.url }}" alt="">
+          <p> {{ producto.name }} <br/> ${{ producto.price }} <br/> {{ producto.sku }}</p>
 
           <p>
             <a href="{% url 'producto_editar' id_producto=producto.id %}" class="btn btn-success">Editar</a>

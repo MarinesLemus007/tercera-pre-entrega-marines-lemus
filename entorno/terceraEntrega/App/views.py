@@ -117,19 +117,17 @@ def cliente_eliminar(request, id_cliente):
 @login_required(login_url='/logeo/')
 def product(request):
 
-    request.method == 'GET'
-    productos = Products.objects.all()
-
     if request.method == 'POST':
-        form = ProductoForm(request.POST)
+        form = ProductoForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
             messages.success(request, 'El producto se ha creado con éxito.')
             form = ProductoForm()
-            return render(request, './app/producto.html', {'form': form, 'productos': productos, 'active_view': 'vista_productos'})
     else:
-        form = ProductoForm()
+        form = ProductoForm(initial={'image': 'default_image.jpg'})
+
+    productos = Products.objects.all()
     return render(request, './app/producto.html', {'form': form, 'productos': productos, 'active_view': 'vista_productos'})
 
 @login_required(login_url='/logeo/')
